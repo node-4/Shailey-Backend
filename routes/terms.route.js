@@ -3,11 +3,11 @@ const { authJwt, objectId } = require("../middlewares");
 const express = require("express");
 const router = express.Router();
 
-router.post("api/v1/admin/terms", [authJwt.isAdmin], terms.create);
-router.put("api/v1/admin/terms/:id",[authJwt.isAdmin, objectId.validId],terms.update);
-router.get("api/v1/admin/terms/:id", terms.getId);
-router.get("api/v1/admin/terms", terms.get);
-router.delete("api/v1/admin/terms/:id",[authJwt.isAdmin, objectId.validId],terms.delete);
-router.get("api/v1/terms/:id", [objectId.validId], terms.getId);
-router.get("api/v1/terms", terms.get);
+router.post("/admin/terms", [authJwt.isAdmin], terms.create);
+router.put("/admin/terms/:id",[authJwt.isAdmin, objectId.validId],terms.update);
+router.get("/admin/terms/:id", terms.getId);
+router.get("/admin/terms", terms.get);
+router.delete("/admin/terms/:id",[authJwt.isAdmin, objectId.validId],terms.delete);
+router.get("/terms/:id", [objectId.validId], terms.getId);
+router.get("/Allterms", terms.get);
 module.exports = router;

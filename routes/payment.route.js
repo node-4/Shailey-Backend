@@ -5,9 +5,9 @@ const { authJwt } = require("../middlewares");
 const express = require("express");
 const router = express.Router();
     router.post(
-        "api/v1/teachers/:id/subscriptions/:subscriptionId/payments",
+        "/teachers/:id/subscriptions/:subscriptionId/payments",
         [authJwt.verifyToken],
         payment.createPaymentOrder
     );
-    router.get("api/v1/payments", [authJwt.verifyToken], payment.getAllPayments);
+    router.get("/payments", [authJwt.verifyToken], payment.getAllPayments);
     module.exports = router;

@@ -5,38 +5,38 @@ const { isValidId, authJwt } = require("../middlewares");
 const express = require("express");
 const router = express.Router();
 router.post(
-        "api/v1/admin/subscriptions",
+        "/admin/subscriptions",
         [authJwt.isAdmin],
         subscriptionController.createSubscription
     );
     router.put(
-        "api/v1/admin/subscriptions/:id",
+        "/admin/subscriptions/:id",
         [authJwt.isAdmin, isValidId.subscriptionId],
         subscriptionController.updateSubscription
     );
     router.delete(
-        "api/v1/admin/subscriptions/:id",
+        "/admin/subscriptions/:id",
         [authJwt.isAdmin, isValidId.subscriptionId],
         subscriptionController.deleteSubscription
     );
     router.get(
-        "api/v1/admin/subscriptions/:id",
+        "/admin/subscriptions/:id",
         [authJwt.isAdmin, isValidId.subscriptionId],
         subscriptionController.getSubscriptionById
     );
     router.get(
-        "api/v1/admin/subscriptions",
+        "/admin/subscriptions",
         [authJwt.isAdmin],
         subscriptionController.getAllSubscriptions
     );
 
     router.get(
-        "api/v1/subscriptions/:id",
+        "/subscriptions/:id",
         [authJwt.verifyToken, isValidId.subscriptionId],
         subscriptionController.getSubscriptionById
     );
     router.get(
-        "api/v1/subscriptions",
+        "/subscriptions",
         [authJwt.verifyToken],
         subscriptionController.getAllSubscriptions
     );

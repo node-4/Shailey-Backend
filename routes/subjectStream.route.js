@@ -2,27 +2,27 @@ const subjectStream = require("../controllers/subjectStream.controller");
 const { authJwt, objectId } = require("../middlewares");
 const express = require("express");
 const router = express.Router();   
- router.post("api/v1/admin/streams", [authJwt.isAdmin], subjectStream.create);
-    router.get("api/v1/admin/streams", [authJwt.isAdmin], subjectStream.get);
+ router.post("/admin/streams", [authJwt.isAdmin], subjectStream.create);
+    router.get("/admin/streams", [authJwt.isAdmin], subjectStream.get);
     router.get(
-        "api/v1/admin/streams/:id",
+        "/admin/streams/:id",
         [authJwt.isAdmin, objectId.validId],
         subjectStream.getId
     );
     router.put(
-        "api/v1/admin/streams/:id",
+        "/admin/streams/:id",
         [authJwt.isAdmin, objectId.validId],
         subjectStream.update
     );
     router.delete(
-        "api/v1/admin/streams/:id",
+        "/admin/streams/:id",
         [authJwt.isAdmin, objectId.validId],
         subjectStream.delete
     );
     //admins
-    router.get("api/v1/streams", [authJwt.verifyToken], subjectStream.get);
+    router.get("/streams", [authJwt.verifyToken], subjectStream.get);
     router.get(
-        "api/v1/streams/:id",
+        "/streams/:id",
         [authJwt.verifyToken, objectId.validId],
         subjectStream.getId
     );
