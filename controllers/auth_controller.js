@@ -14,15 +14,11 @@ exports.login = async (req, res) => {
         if (userexists && req.body.phone == "9876543210") {
             userexists.OTP = 1234;
             await userexists.save();
-            return res
-                .status(200)
-                .send({ message: "otp sent successfully", otp: 1234 });
-        }
-        if (userexists) {
+            return res.status(200).send({ message: "otp sent successfully", otp: 1234 });
+        } else if (userexists) {
             const otpGen = Math.floor(1000 + Math.random() * 9000).toString();
             userexists.OTP = otpGen;
             const updatedUser = await userexists.save();
-
             client.messages.create({
                 body: `Your OTP for login is: ${otpGen}`,
                 messagingServiceSid: "MGe4d477423a9242714f79040637360f7a",
@@ -35,39 +31,38 @@ exports.login = async (req, res) => {
                 message: "OTP sent successfully",
             });
         } else {
-            if ((req.body.phone = "9876543210")) {
+            if ((req.body.phone == "9876543210")== true) {
                 const otpToSend = await LoginModel.create({
                     phone: req.body.phone,
                     OTP: "1234",
                 });
                 return res.status(200).json({
                     success: true,
+                    otp:  "1234",
+                    message: "OTP sent Successfully",
+                });
+            }else{
+                console.log(req.body);
+                const otpGen = Math.floor(1000 + Math.random() * 9000).toString();
+                const data = {
+                    phone: req.body.phone,
+                    OTP: otpGen,
+                };
+                const otpToSend = await LoginModel.create(data);
+                client.messages.create({
+                    body: `Your OTP for login is: ${otpGen}`,
+                    messagingServiceSid: "MGe4d477423a9242714f79040637360f7a",
+                    from: "+15075797754",
+                    to: `+91${req.body.phone}`,
+                });
+    
+                return res.status(200).json({
+                    success: true,
                     otp: otpGen,
                     message: "OTP sent Successfully",
                 });
             }
-            const otpGen = Math.floor(1000 + Math.random() * 9000).toString();
-
-            const data = {
-                phone: req.body.phone,
-                OTP: otpGen,
-            };
-
-            const otpToSend = await LoginModel.create(data);
-
-            client.messages.create({
-                body: `Your OTP for login is: ${otpGen}`,
-                messagingServiceSid: "MGe4d477423a9242714f79040637360f7a",
-                from: "+15075797754",
-                to: `+91${req.body.phone}`,
-            });
-
-            return res.status(200).json({
-                success: true,
-                otp: otpGen,
-                message: "OTP sent Successfully",
-            });
-        }
+            }
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: "internal server error" });
@@ -134,24 +129,16 @@ exports.verifyOtp = async (req, res) => {
         // console.log(req.body.OTP);
 
         if (!data.phone) {
-            return res
-                .status(400)
-                .json({ message: "phone Number is required" });
+            return res.status(400).json({ message: "phone Number is required" });
         }
         if (!req.body.OTP) {
             return res.status(401).json({ message: "OTP is required" });
         }
-        //const users= await LoginModel.find();
-
+        console.log(req.body.phone);
         const user = await LoginModel.findOne({ phone: req.body.phone });
-
-        //console.log(user);
         if (!user) {
-            return res.status(401).json({
-                message: "Invalid phone Number",
-            });
+            return res.status(401).json({message: "Invalid phone Number",});
         }
-        //console.log(user);
 
         if (user.OTP != req.body.OTP) {
             return res.status(403).json({ message: "Invalid OTP" });

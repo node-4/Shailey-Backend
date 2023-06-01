@@ -1,6 +1,5 @@
 // const qualificationController = require("../controllers/qualification");
-// module.exports = (app) => {
-//     app.post("/qualifications/qualifications", qualificationController.createQualification);
+//   app.post("/qualifications/qualifications", qualificationController.createQualification);
 //     app.get("/qualifications/qualifications", qualificationController.getQualifications);
 //     app.get("/qualifications/qualifications/:id", qualificationController.getQualification);
 //     app.put("/qualifications/qualifications/:id", qualificationController.updateQualification);

@@ -1,33 +1,33 @@
 const authController = require("../controllers/admin_controller");
 const { objectId, authJwt, validateBodies } = require("../middlewares");
-
-module.exports = (app) => {
-  app.post(
-    "/api/v1/admin/auth/signup",
+const express = require("express");
+const router = express.Router();
+  router.post(
+    "api/v1/admin/auth/signup",
     [validateBodies.signUpBody],
     authController.signUp
   );
-  app.post(
-    "/api/v1/admin/auth/signin",
+  router.post(
+    "api/v1/admin/auth/signin",
     [validateBodies.signInBody],
     authController.signIn
   );
 
-  app.get("/api/v1/admin", [authJwt.isAdmin], authController.getAdmins);
-  app.put(
-    "/api/v1/admin/:id",
+  router.get("api/v1/admin", [authJwt.isAdmin], authController.getAdmins);
+  router.put(
+    "api/v1/admin/:id",
     [authJwt.isAdmin, objectId.validId],
     authController.updateAdmin
   );
 
-  app.delete(
-    "/api/v1/admin/:id",
+  router.delete(
+    "api/v1/admin/:id",
     [authJwt.isAdmin, objectId.validId],
     authController.deleteAdmin
   );
-  //   app.get(
-  //     "/api/v1/admin/:id",
+  //   router.get(
+  //     "api/v1/admin/:id",
   //     [authJwt.isAdmin, , objectId.validId],
   //     authController.findByAdminId
   //   );
-};
+module.exports = router;
